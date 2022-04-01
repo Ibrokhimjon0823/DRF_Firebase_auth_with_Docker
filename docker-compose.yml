@@ -1,0 +1,44 @@
+version: "2.4"
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:11.5
+    networks:
+      - main
+    ports:
+      - "5434:5432"
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=laundries
+      - POSTGRES_DB=laundries
+
+  django:
+    container_name: django
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: >
+      bash -c "
+        ./manage.py runserver 0.0.0.0:8000
+      "
+    volumes:
+      - .:/code
+    networks:
+      - main
+    ports:
+      - "8000:8000"
+      - "8888:8888"
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+
+volumes:
+  pg-data:
+
+networks:
+  main:
+    driver: bridge

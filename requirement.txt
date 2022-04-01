@@ -1,0 +1,7 @@
+Django==3.2.7
+djangorestframework==3.12.4
+psycopg2==2.8.6
+
+firebase-admin
+
+Pillow==7.2.0
