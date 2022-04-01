@@ -22,6 +22,7 @@ services:
       dockerfile: Dockerfile
     command: >
       bash -c "
+         ./manage.py createsuperuser
         ./manage.py runserver 0.0.0.0:8000
       "
     volumes:
